@@ -44,7 +44,7 @@ public class Main {
     }
 
     private static void cadastrarCarro() {
-        System.out.println("\n### CADASTRAR CARRO ###");
+        System.out.println("\n=== CADASTRAR CARRO ===");
         System.out.println("Selecione o tipo:");
         System.out.println("1. Hatch");
         System.out.println("2. Sedan");
@@ -69,26 +69,20 @@ public class Main {
             case 1:
                 System.out.print("É compacto? (true/false): ");
                 boolean isCompact = scanner.nextBoolean();
-                Hatch hatch = new Hatch();
-                hatch.cadastrarVeiculo(placa, modelo, marca, ano);
-                hatch.setPreco(preco);
-                hatch.setCompact(isCompact);
+                Hatch hatch = new Hatch(placa, modelo, marca, ano, preco, isCompact); // Usando construtor completo
+                hatch.cadastrarVeiculo(); // Método modificado (veja abaixo)
                 break;
             case 2:
                 System.out.print("Espaço do porta-mala (litros): ");
                 double espacoPortaMala = scanner.nextDouble();
-                Sedan sedan = new Sedan();
-                sedan.cadastrarVeiculo(placa, modelo, marca, ano);
-                sedan.setPreco(preco);
-                sedan.setEspacoPortaMala(espacoPortaMala);
+                Sedan sedan = new Sedan(placa, modelo, marca, ano, preco, espacoPortaMala);
+                sedan.cadastrarVeiculo();
                 break;
             case 3:
                 System.out.print("Tração (4x4 ou 2x4): ");
                 String tracao = scanner.nextLine();
-                SUV suv = new SUV();
-                suv.cadastrarVeiculo(placa, modelo, marca, ano);
-                suv.setPreco(preco);
-                suv.setTracao(tracao);
+                SUV suv = new SUV(placa, modelo, marca, ano, preco, tracao);
+                suv.cadastrarVeiculo();
                 break;
             default:
                 System.out.println("Tipo inválido!");

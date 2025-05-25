@@ -35,15 +35,9 @@ public class Hatch extends Carro {
     }
 
     @Override
-    public Hatch cadastrarVeiculo(String placa, String modelo, String marca, int ano) {
-        Hatch hatch = new Hatch();
-        hatch.setPlaca(placa);
-        hatch.setModelo(modelo);
-        hatch.setMarca(marca);
-        hatch.setAno(ano);
-        carros.add(hatch);
-        hatchs.add(hatch);
-        return hatch;
+    public void cadastrarVeiculo() {
+        carros.add(this);
+        hatchs.add(this);
     }
 
     public static boolean atualizarHatch(String placa, double novoPreco, boolean novoIsCompact) {

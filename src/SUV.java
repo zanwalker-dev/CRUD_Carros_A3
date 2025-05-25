@@ -14,7 +14,7 @@ public class SUV extends Carro {
         this.marca = marca;
         this.ano = ano;
         this.preco = preco;
-        this.tracao = tracao;
+        setTracao(tracao);
     }
 
     // Getters e Setters específicos
@@ -38,16 +38,9 @@ public class SUV extends Carro {
         }
     }
 
-    @Override
-    public SUV cadastrarVeiculo(String placa, String modelo, String marca, int ano) {
-        SUV suv = new SUV();
-        suv.setPlaca(placa);
-        suv.setModelo(modelo);
-        suv.setMarca(marca);
-        suv.setAno(ano);
-        carros.add(suv);
-        suvs.add(suv);
-        return suv;
+    public void cadastrarVeiculo() {
+        carros.add(this);
+        suvs.add(this);
     }
 
     public static boolean atualizarSUV(String placa, double novoPreco, String novaTracao) {
