@@ -17,6 +17,17 @@ public class Sedan extends Carro {
         this.espacoPortaMala = espacoPortaMala;
     }
 
+    public static boolean atualizarSedan(String placa, double novoPreco, double novoEspacoPortaMala) {
+        for (Sedan sedan : sedans) {
+            if (sedan.getPlaca().equals(placa)) {
+                sedan.setPreco(novoPreco);
+                sedan.setEspacoPortaMala(novoEspacoPortaMala);
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Getters e Setters específicos
     public double getPreco() {
         return preco;
