@@ -47,8 +47,8 @@ public class Hatch extends Carro {
 
     public double valorAno() {
         int anos = java.time.Year.now().getValue() - this.ano;
-        //5% no primeiro ano, 15% no quinto ano, estabilizando em 25% após 10 anos
-        double percentualDesvalorizacao = Math.min(0.25, 0.05 + (anos * 0.02)); // Máximo de 25% de desvalorização
+        // Hatch desvaloriza mais: 10% no primeiro ano, 25% no quinto ano, até 40% máximo
+        double percentualDesvalorizacao = Math.min(0.40, 0.10 + (anos * 0.03));
         return this.preco * (1 - percentualDesvalorizacao);
     }
 
