@@ -4,6 +4,8 @@
 
 Este projeto foi desenvolvido para uma entrega na faculdade. Trata-se de um sistema CRUD para gerenciamento de revenda de carros usados, utilizando Java e POO. O sistema permite cadastrar e gerenciar diferentes tipos de veículos (Hatch, Sedan e SUV) e suas características específicas a partir de uma classe abstrata Carro, utilizando Herança e Polimorfismo.
 
+Obs: Faz parte do desafio não utilizar nenhuma biblioteca além das nativas do Java.
+
 ## 🔧 Funcionalidades Principais
 
 Em geral, ao cadastrar recebe como parametro o preço original do carro e utiliza um método especifico para cada carro que calcula uma desvalorização baseada na idade do carro. Como o ano de comparação é o ano que está sendo feito a consulta esse valor vai continuar desvalorizando ao longo do tempo de acordo com quando a cosulta for feita.
