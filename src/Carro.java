@@ -54,7 +54,7 @@ public abstract class Carro {
     }
 
     // Métodos CRUD
-    public abstract void cadastrarVeiculo(String placa, String modelo, String marca, int ano);
+    public abstract Carro cadastrarVeiculo(String placa, String modelo, String marca, int ano);
 
     public static void removerVeiculo(String placa) {
         carros.removeIf(carro -> carro.getPlaca().equals(placa));

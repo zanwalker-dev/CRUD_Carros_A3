@@ -35,7 +35,7 @@ public class Sedan extends Carro {
     }
 
     @Override
-    public void cadastrarVeiculo(String placa, String modelo, String marca, int ano) {
+    public Sedan cadastrarVeiculo(String placa, String modelo, String marca, int ano) {
         Sedan sedan = new Sedan();
         sedan.setPlaca(placa);
         sedan.setModelo(modelo);
@@ -43,6 +43,7 @@ public class Sedan extends Carro {
         sedan.setAno(ano);
         carros.add(sedan);
         sedans.add(sedan);
+        return sedan;
     }
 
     public static boolean atualizarSedan(String placa, double novoPreco, double novoEspacoPortaMala) {

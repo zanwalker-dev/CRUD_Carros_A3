@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-            System.out.println("\n=== MENU PRINCIPAL ===");
+            System.out.println("\n### MENU PRINCIPAL ###");
             System.out.println("1. Cadastrar carro para venda");
             System.out.println("2. Pesquisar carro");
             System.out.println("3. Listar todos os carros");
@@ -16,7 +16,7 @@ public class Main {
             System.out.print("Escolha uma opção: ");
 
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpar buffer
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -44,7 +44,7 @@ public class Main {
     }
 
     private static void cadastrarCarro() {
-        System.out.println("\n=== CADASTRAR CARRO ===");
+        System.out.println("\n### CADASTRAR CARRO ###");
         System.out.println("Selecione o tipo:");
         System.out.println("1. Hatch");
         System.out.println("2. Sedan");
@@ -97,7 +97,7 @@ public class Main {
     }
 
     private static void pesquisarCarro() {
-        System.out.println("\n=== PESQUISAR CARRO ===");
+        System.out.println("\n### PESQUISAR CARRO ###");
         System.out.println("1. Pesquisar por placa");
         System.out.println("2. Listar por categoria");
         System.out.println("3. Listar por modelo");
@@ -158,12 +158,12 @@ public class Main {
     }
 
     private static void listarTodosCarros() {
-        System.out.println("\n=== TODOS OS CARROS ===");
+        System.out.println("\n### TODOS OS CARROS ###");
         listarCarros(Carro.getTodosCarros());
     }
 
     private static void alterarCarro() {
-        System.out.println("\n=== ALTERAR CARRO ===");
+        System.out.println("\n### ALTERAR CARRO ###");
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
 
@@ -243,7 +243,7 @@ public class Main {
     }
 
     private static void removerCarro() {
-        System.out.println("\n=== REMOVER CARRO ===");
+        System.out.println("\n### REMOVER CARRO ###");
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
 

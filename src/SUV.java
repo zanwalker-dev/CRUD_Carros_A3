@@ -39,7 +39,7 @@ public class SUV extends Carro {
     }
 
     @Override
-    public void cadastrarVeiculo(String placa, String modelo, String marca, int ano) {
+    public SUV cadastrarVeiculo(String placa, String modelo, String marca, int ano) {
         SUV suv = new SUV();
         suv.setPlaca(placa);
         suv.setModelo(modelo);
@@ -47,6 +47,7 @@ public class SUV extends Carro {
         suv.setAno(ano);
         carros.add(suv);
         suvs.add(suv);
+        return suv;
     }
 
     public static boolean atualizarSUV(String placa, double novoPreco, String novaTracao) {
