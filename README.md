@@ -126,7 +126,7 @@ Carro encontrado = Carro.buscarPorPlaca("ABC1234");
 
 ## 🤝 Contribuição
 
-Contribuições são bem-vindas! Siga os passos:
+Contribuições são bem-vindas apenas para fim educacional! Siga os passos:
 1. Faça um fork do projeto
 2. Crie sua branch (`git checkout -b feature/nova-feature`)
 3. Faça commit das alterações (`git commit -m 'Adiciona nova feature'`)
