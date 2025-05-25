@@ -47,7 +47,9 @@ public class Sedan extends Carro {
 
     public double valorAno() {
         int anos = java.time.Year.now().getValue() - this.ano;
-        return this.preco * Math.pow(0.85, anos); // Desvalorização de 15% ao ano
+        // Sedan desvaloriza mediano: 7% no primeiro ano, 20% no quinto ano, até 30% máximo
+        double percentualDesvalorizacao = Math.min(0.30, 0.07 + (anos * 0.026));
+        return this.preco * (1 - percentualDesvalorizacao);
     }
 
     public static List<Sedan> getTodosSedans() {
