@@ -44,7 +44,7 @@ public class Main {
     }
 
     private static void cadastrarCarro() {
-        System.out.println("\n=== CADASTRAR CARRO ===");
+        System.out.println("\n### CADASTRAR CARRO ###");
         System.out.println("Selecione o tipo:");
         System.out.println("1. Hatch");
         System.out.println("2. Sedan");
@@ -69,8 +69,8 @@ public class Main {
             case 1:
                 System.out.print("É compacto? (true/false): ");
                 boolean isCompact = scanner.nextBoolean();
-                Hatch hatch = new Hatch(placa, modelo, marca, ano, preco, isCompact); // Usando construtor completo
-                hatch.cadastrarVeiculo(); // Método modificado (veja abaixo)
+                Hatch hatch = new Hatch(placa, modelo, marca, ano, preco, isCompact);
+                hatch.cadastrarVeiculo();
                 break;
             case 2:
                 System.out.print("Espaço do porta-mala (litros): ");

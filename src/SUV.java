@@ -3,7 +3,7 @@ import java.util.List;
 
 public class SUV extends Carro {
     private double preco;
-    private String tracao; // "4x4" ou "2x4"
+    private String tracao;
     private static List<SUV> suvs = new ArrayList<>();
 
     public SUV() {}
@@ -17,7 +17,7 @@ public class SUV extends Carro {
         setTracao(tracao);
     }
 
-    // Getters e Setters específicos
+    // Getters e Setters
     public double getPreco() {
         return preco;
     }
@@ -38,6 +38,7 @@ public class SUV extends Carro {
         }
     }
 
+    // Métodos CRUD
     public void cadastrarVeiculo() {
         carros.add(this);
         suvs.add(this);

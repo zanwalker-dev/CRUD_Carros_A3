@@ -17,7 +17,7 @@ public class Hatch extends Carro {
         this.isCompact = isCompact;
     }
 
-    // Getters e Setters específicos
+    // Getters e Setters
     public double getPreco() {
         return preco;
     }
@@ -34,6 +34,7 @@ public class Hatch extends Carro {
         isCompact = compact;
     }
 
+    // Métodos CRUD
     @Override
     public void cadastrarVeiculo() {
         carros.add(this);

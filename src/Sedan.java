@@ -17,7 +17,7 @@ public class Sedan extends Carro {
         this.espacoPortaMala = espacoPortaMala;
     }
 
-    // Getters e Setters específicos
+    // Getters e Setters
     public double getPreco() {
         return preco;
     }
@@ -34,6 +34,7 @@ public class Sedan extends Carro {
         this.espacoPortaMala = espacoPortaMala;
     }
 
+    // Métodos CRUD
     @Override
     public void cadastrarVeiculo() {
         carros.add(this);
