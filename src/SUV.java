@@ -51,7 +51,9 @@ public class SUV extends Carro {
 
     public double valorAno() {
         int anos = java.time.Year.now().getValue() - this.ano;
-        return this.preco * Math.pow(0.8, anos); // Desvalorização de 20% ao ano
+        // SUV desvaloriza pouco: 5% no primeiro ano, 15% no quinto ano, até 25% máximo
+        double percentualDesvalorizacao = Math.min(0.25, 0.05 + (anos * 0.02));
+        return this.preco * (1 - percentualDesvalorizacao);
     }
 
     public static List<SUV> getTodosSUVs() {
