@@ -17,17 +17,6 @@ public class Hatch extends Carro {
         this.isCompact = isCompact;
     }
 
-    public static boolean atualizarHatch(String placa, double novoPreco, boolean novoIsCompact) {
-        for (Hatch hatch : hatchs) {
-            if (hatch.getPlaca().equals(placa)) {
-                hatch.setPreco(novoPreco);
-                hatch.setCompact(novoIsCompact);
-                return true;
-            }
-        }
-        return false;
-    }
-
     // Getters e Setters específicos
     public double getPreco() {
         return preco;
@@ -54,6 +43,17 @@ public class Hatch extends Carro {
         hatch.setAno(ano);
         carros.add(hatch);
         hatchs.add(hatch);
+    }
+
+    public static boolean atualizarHatch(String placa, double novoPreco, boolean novoIsCompact) {
+        for (Hatch hatch : hatchs) {
+            if (hatch.getPlaca().equals(placa)) {
+                hatch.setPreco(novoPreco);
+                hatch.setCompact(novoIsCompact);
+                return true;
+            }
+        }
+        return false;
     }
 
     public double valorAno() {
