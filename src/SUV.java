@@ -49,6 +49,21 @@ public class SUV extends Carro {
         suvs.add(suv);
     }
 
+    public static boolean atualizarSUV(String placa, double novoPreco, String novaTracao) {
+        for (SUV suv : suvs) {
+            if (suv.getPlaca().equals(placa)) {
+                suv.setPreco(novoPreco);
+                try {
+                    suv.setTracao(novaTracao);
+                    return true;
+                } catch (IllegalArgumentException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public double valorAno() {
         int anos = java.time.Year.now().getValue() - this.ano;
         // SUV desvaloriza pouco: 5% no primeiro ano, 15% no quinto ano, até 25% máximo
