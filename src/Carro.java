@@ -6,6 +6,7 @@ public abstract class Carro {
     protected String modelo;
     protected String marca;
     protected int ano;
+    protected int quilometragem;
     protected static List<Carro> carros = new ArrayList<>();
 
     public static boolean atualizarVeiculo(String placa, String novoModelo, String novaMarca, int novoAno) {
@@ -23,10 +24,6 @@ public abstract class Carro {
     // Getters e Setters
     public String getPlaca() {
         return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
     }
 
     public String getModelo() {
@@ -53,12 +50,22 @@ public abstract class Carro {
         this.ano = ano;
     }
 
+    public int getQuilometragem() {
+        return quilometragem;
+    }
+
+    public void setQuilometragem(int quilometragem) {
+        this.quilometragem = quilometragem;
+    }
+
     // Métodos CRUD
     public abstract void cadastrarVeiculo();
 
     public static void removerVeiculo(String placa) {
         carros.removeIf(carro -> carro.getPlaca().equals(placa));
     }
+
+    public abstract double valorAtual();
 
     public static List<Carro> pesquisarPorModelo(String modelo) {
         List<Carro> resultado = new ArrayList<>();

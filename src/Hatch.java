@@ -1,3 +1,4 @@
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +9,14 @@ public class Hatch extends Carro {
 
     public Hatch() {}
 
-    public Hatch(String placa, String modelo, String marca, int ano, double preco, boolean isCompact) {
+    public Hatch(String placa, String modelo, String marca, int ano, int quilometragem, double preco, boolean isCompact) {
         this.placa = placa;
         this.modelo = modelo;
         this.marca = marca;
         this.ano = ano;
         this.preco = preco;
         this.isCompact = isCompact;
+        this.quilometragem = quilometragem;
     }
 
     // Getters e Setters
@@ -52,11 +54,15 @@ public class Hatch extends Carro {
         return false;
     }
 
-    public double valorAno() {
-        int anos = java.time.Year.now().getValue() - this.ano;
-        // Hatch desvaloriza mais: 10% no primeiro ano, 25% no quinto ano, até 40% máximo
-        double percentualDesvalorizacao = Math.min(0.40, 0.10 + (anos * 0.03));
-        return this.preco * (1 - percentualDesvalorizacao);
+    @Override
+    public double valorAtual() {
+        // Desvalorização por ano (Hatch desvaloriza mais. Primeiro ano:10%, quinto ano: 25%, teto: 40%)
+        int anos = Year.now().getValue() - this.ano;
+        double percentualAno = Math.min(0.40, 0.10 + (anos * 0.03));
+        // Desvalorização por KM (0.35% a cada 1.000 km)
+        double percentualKm = Math.min(0.25, (this.quilometragem / 1000) * 0.0035);
+
+        return this.preco * (1 - Math.min(0.60, percentualAno + percentualKm));
     }
 
     public static List<Hatch> getTodosHatchs() {
