@@ -39,6 +39,9 @@ public class Sedan extends Carro {
     // Métodos CRUD
     @Override
     public void cadastrarVeiculo() {
+        if (Carro.placaExistente(this.placa)) {
+            throw new IllegalArgumentException("Placa já cadastrada");
+        }
         carros.add(this);
         sedans.add(this);
     }

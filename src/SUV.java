@@ -42,6 +42,9 @@ public class SUV extends Carro {
 
     // Métodos CRUD
     public void cadastrarVeiculo() {
+        if (Carro.placaExistente(this.placa)) {
+            throw new IllegalArgumentException("Placa já cadastrada");
+        }
         carros.add(this);
         suvs.add(this);
     }

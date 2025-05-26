@@ -67,6 +67,10 @@ public abstract class Carro {
 
     public abstract double valorAtual();
 
+    public static boolean placaExistente(String placa) {
+        return carros.stream().anyMatch(c -> c.getPlaca().equalsIgnoreCase(placa));
+    }
+
     public static List<Carro> pesquisarPorModelo(String modelo) {
         List<Carro> resultado = new ArrayList<>();
         for (Carro carro : carros) {

@@ -53,8 +53,20 @@ public class Main {
         int tipo = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Placa: ");
-        String placa = scanner.nextLine();
+        String placa;
+        do {
+            System.out.print("Placa: ");
+            placa = scanner.nextLine().toUpperCase();
+
+            if (Carro.placaExistente(placa)) {
+                System.out.println("Erro: Placa já cadastrada no sistema!");
+                System.out.println("Deseja tentar novamente? (S/N)");
+                String resposta = scanner.nextLine();
+                if (!resposta.equalsIgnoreCase("S")) {
+                    return;
+                }
+            }
+        } while (Carro.placaExistente(placa));
         System.out.print("Modelo: ");
         String modelo = scanner.nextLine();
         System.out.print("Marca: ");
