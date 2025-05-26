@@ -8,27 +8,18 @@ Obs: Faz parte do desafio não utilizar nenhuma biblioteca além das nativas do 
 
 ## 🔧 Funcionalidades Principais
 
-Em geral, ao cadastrar recebe como parametro o preço original do carro e utiliza um método especifico para cada carro que calcula uma desvalorização baseada na idade do carro. Como o ano de comparação é o ano que está sendo feito a consulta esse valor vai continuar desvalorizando ao longo do tempo de acordo com quando a cosulta for feita.
+Em geral, ao cadastrar um carro, o programa recebe como parâmetro o preço original do veículo e utiliza um método especificado a cada categoria de carro calcular uma desvalorização média baseada na idade e quilometragem do veículo. Como o método captura o ano que o usuário está fazendo a consulta em comparativo ao ano do carro, esse valor se torna dinâmico.
 
 ### 🚗 Tipos de Veículos Suportados
-1. **Hatch**(Maior desvalorização)
-   - Atributos específicos: preço e se é compacto
-   - Cálculo de desvalorização: 10% (1º ano) → 25% (5º ano) → Teto 40%
-   - Exemplo: HB20 2020 (R$60.000) em 2023 vale ≈ R$46.800
-2. **Sedan**(Desvalorização moderada) 
-   - Atributos específicos: preço e espaço do porta-malas
-   - Cálculo de desvalorização: 7% (1º ano) → 20% (5º ano) → Teto 30%
-   - Exemplo: Civic 2019 (R$120.000) em 2023 vale ≈ R$96.000
-
-3. **SUV**(Menor desvalorização)
-   - Atributos específicos: preço e tipo de tração (4x4 ou 2x4)
-   - Cálculo de desvalorização: 5% (1º ano) → 15% (5º ano) → Teto 25%
-   - Exemplo: Tiguan 2021 (R$150.000) em 2023 vale ≈ R$142.500
-
+| Tipo  | Desvalorização Anual | Desvalorização por KM | Máx. Combinado | Atributos Específicos |
+|-------|----------------------|-----------------------|----------------|-----------------------|
+| Hatch | 3% ao ano            | 0,35% a cada 1.000 km | 60%            | Preço, Compacto       |
+| Sedan | 2,6% ao ano          | 0,25% a cada 1.000 km | 50%            | Preço, Porta-malas    |
+| SUV   | 2% ao ano            | 0,18% a cada 1.000 km | 40%            | Preço, Tração         |
 ### 📋 Operações CRUD
 | Operação | Descrição |
 |----------|-----------|
-| **Cadastrar** | Adiciona novos veículos ao sistema |
+| **Cadastrar** | Adiciona novos veículos ao sistema, verifica se a placa já está registrada para evitar duplicidade |
 | **Pesquisar** | Busca veículos por placa, modelo, marca ou categoria |
 | **Listar** | Exibe todos os veículos cadastrados |
 | **Atualizar** | Modifica dados dos veículos existentes |
@@ -45,29 +36,38 @@ classDiagram
         -String modelo
         -String marca
         -int ano
-        +cadastrar()
-        +remover()
-        +buscarPorPlaca()
-        +buscarPorModelo()
-        +listarTodos()
+        +cadastrarVeiculo()
+        +removerVeiculo()
+        +valorAtual()
+        +placaExistente()
+        +pesquisarPorModelo()
+        +pesquisarPorMarca()
+        +pesquisarPorPlaca()
+        +getTodosCarros()
     }
     
     class Hatch {
         -double preco
         -boolean isCompact
-        +valorAno()
+        +atualizarHatch()
+        +valorAtual()
+        +getTodosHatchs() 
     }
     
     class Sedan {
         -double preco
         -double espacoPortaMala
-        +valorAno()
+        +atualizarSedan()
+        +valorAtual()
+        +getTodosSedans() 
+
     }
     
     class SUV {
         -double preco
         -String tracao
-        +valorAno()
+        +atualizarSUV()
+        +getTodosSUVs() 
     }
     
     Carro <|-- Hatch
@@ -111,24 +111,17 @@ mvn exec:java -Dexec.mainClass="Main"
 4. **Interface Gráfica**:
    - Migração para Swing
 
-## 📝 Exemplo de Uso
-
+### Cálculo de Valor com Quilometragem
 ```java
-// Cadastrando um Hatch
-Hatch gol = new Hatch("ABC1234", "Gol", "Volkswagen", 2020, 45000, true);
-gol.cadastrar();
-
-// Calculando valor atualizado
-double valorAtual = gol.valorAno();
-System.out.println("Valor atual: R$" + valorAtual);
-
-// Buscando veículo
-Carro encontrado = Carro.buscarPorPlaca("ABC1234");
+SUV compass = new SUV("XYZ9A87", "Compass", "Jeep", 2021, 150000, 30000, "4x4");
+double valorAtual = compass.calcularValorAtual(); 
+// Considera 2 anos (4%) + 30.000 km (5,4%) → Total 9,4%
+// Valor: R$150.000 × 90,6% = R$135.900
 ```
 
 ## 🤝 Contribuição
 
-Contribuições são bem-vindas apenas para fim educacional! Siga os passos:
+Para contribuir faça o seguinte:
 1. Faça um fork do projeto
 2. Crie sua branch (`git checkout -b feature/nova-feature`)
 3. Faça commit das alterações (`git commit -m 'Adiciona nova feature'`)
