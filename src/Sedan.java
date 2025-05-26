@@ -1,3 +1,4 @@
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,12 @@ public class Sedan extends Carro {
 
     public Sedan() {}
 
-    public Sedan(String placa, String modelo, String marca, int ano, double preco, double espacoPortaMala) {
+    public Sedan(String placa, String modelo, String marca, int ano, int quilometragem,double preco, double espacoPortaMala) {
         this.placa = placa;
         this.modelo = modelo;
         this.marca = marca;
         this.ano = ano;
+        this.quilometragem = quilometragem;
         this.preco = preco;
         this.espacoPortaMala = espacoPortaMala;
     }
@@ -37,6 +39,9 @@ public class Sedan extends Carro {
     // Métodos CRUD
     @Override
     public void cadastrarVeiculo() {
+        if (Carro.placaExistente(this.placa)) {
+            throw new IllegalArgumentException("Placa já cadastrada");
+        }
         carros.add(this);
         sedans.add(this);
     }
@@ -52,12 +57,17 @@ public class Sedan extends Carro {
         return false;
     }
 
-    public double valorAno() {
-        int anos = java.time.Year.now().getValue() - this.ano;
-        // Sedan desvaloriza mediano: 7% no primeiro ano, 20% no quinto ano, até 30% máximo
-        double percentualDesvalorizacao = Math.min(0.30, 0.07 + (anos * 0.026));
-        return this.preco * (1 - percentualDesvalorizacao);
+    @Override
+    public double valorAtual() {
+        int anos = Year.now().getValue() - this.ano;
+        // Desvalorização por ano (Sedan desvaloriza médio. Primeiro ano:7%, quinto ano: 20%, teto: 30%)
+        double percentualAno = Math.min(0.30, 0.07 + (anos * 0.026));
+        // Desvalorização menor por KM (0.25% a cada 1.000 km)
+        double percentualKm = Math.min(0.20, (this.quilometragem / 1000) * 0.0025);
+
+        return this.preco * (1 - Math.min(0.50, percentualAno + percentualKm));
     }
+
 
     public static List<Sedan> getTodosSedans() {
         return new ArrayList<>(sedans);

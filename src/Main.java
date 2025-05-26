@@ -53,8 +53,20 @@ public class Main {
         int tipo = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Placa: ");
-        String placa = scanner.nextLine();
+        String placa;
+        do {
+            System.out.print("Placa: ");
+            placa = scanner.nextLine().toUpperCase();
+
+            if (Carro.placaExistente(placa)) {
+                System.out.println("Erro: Placa já cadastrada no sistema!");
+                System.out.println("Deseja tentar novamente? (S/N)");
+                String resposta = scanner.nextLine();
+                if (!resposta.equalsIgnoreCase("S")) {
+                    return;
+                }
+            }
+        } while (Carro.placaExistente(placa));
         System.out.print("Modelo: ");
         String modelo = scanner.nextLine();
         System.out.print("Marca: ");
@@ -64,24 +76,27 @@ public class Main {
         System.out.print("Preço: ");
         double preco = scanner.nextDouble();
         scanner.nextLine();
+        System.out.print("Quilometragem atual: ");
+        int quilometragem = scanner.nextInt();
+        scanner.nextLine();
 
         switch (tipo) {
             case 1:
                 System.out.print("É compacto? (true/false): ");
                 boolean isCompact = scanner.nextBoolean();
-                Hatch hatch = new Hatch(placa, modelo, marca, ano, preco, isCompact);
+                Hatch hatch = new Hatch(placa, modelo, marca, ano, quilometragem, preco, isCompact);
                 hatch.cadastrarVeiculo();
                 break;
             case 2:
                 System.out.print("Espaço do porta-mala (litros): ");
                 double espacoPortaMala = scanner.nextDouble();
-                Sedan sedan = new Sedan(placa, modelo, marca, ano, preco, espacoPortaMala);
+                Sedan sedan = new Sedan(placa, modelo, marca, ano, quilometragem, preco, espacoPortaMala);
                 sedan.cadastrarVeiculo();
                 break;
             case 3:
                 System.out.print("Tração (4x4 ou 2x4): ");
                 String tracao = scanner.nextLine();
-                SUV suv = new SUV(placa, modelo, marca, ano, preco, tracao);
+                SUV suv = new SUV(placa, modelo, marca, ano, quilometragem, preco, tracao);
                 suv.cadastrarVeiculo();
                 break;
             default:
@@ -181,6 +196,8 @@ public class Main {
             System.out.println("5. Tração");
         }
 
+        System.out.println("6. Atualizar quilometragem");
+
         System.out.print("Opção: ");
         int opcao = scanner.nextInt();
         scanner.nextLine();
@@ -229,6 +246,10 @@ public class Main {
                     ((SUV) carro).setTracao(tracao);
                 }
                 break;
+            case 6:
+                System.out.print("Nova quilometragem: ");
+                int novaKm = scanner.nextInt();
+                carro.setQuilometragem(novaKm);
             default:
                 System.out.println("Opção inválida!");
                 return;
@@ -266,21 +287,24 @@ public class Main {
         if (carro instanceof Hatch) {
             Hatch hatch = (Hatch) carro;
             System.out.println("Tipo: Hatch");
-            System.out.println("Preço: R$" + hatch.getPreco());
+            System.out.printf("Preço: R$%.2f\n", hatch.getPreco());
             System.out.println("Compacto: " + hatch.isCompact());
-            System.out.println("Valor atual: R$" + hatch.valorAno());
+            System.out.println("Quilometragem: " + hatch.getQuilometragem() + " km");
+            System.out.printf("Valor atual: R$%.2f\n", hatch.valorAtual());
         } else if (carro instanceof Sedan) {
             Sedan sedan = (Sedan) carro;
             System.out.println("Tipo: Sedan");
-            System.out.println("Preço: R$" + sedan.getPreco());
+            System.out.printf("Preço: R$%.2f\n", sedan.getPreco());
             System.out.println("Porta-mala: " + sedan.getEspacoPortaMala() + " litros");
-            System.out.println("Valor atual: R$" + sedan.valorAno());
+            System.out.println("Quilometragem: " + sedan.getQuilometragem() + " km");
+            System.out.printf("Valor atual: R$%.2f\n", sedan.valorAtual());
         } else if (carro instanceof SUV) {
             SUV suv = (SUV) carro;
             System.out.println("Tipo: SUV");
-            System.out.println("Preço: R$" + suv.getPreco());
+            System.out.printf("Preço: R$%.2f\n", suv.getPreco());
             System.out.println("Tração: " + suv.getTracao());
-            System.out.println("Valor atual: R$" + suv.valorAno());
+            System.out.println("Quilometragem: " + carro.getQuilometragem() + " km");
+            System.out.printf("Valor atual: R$%.2f\n", carro.valorAtual());
         }
     }
 }

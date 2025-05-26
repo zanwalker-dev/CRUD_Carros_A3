@@ -1,3 +1,4 @@
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,12 @@ public class SUV extends Carro {
 
     public SUV() {}
 
-    public SUV(String placa, String modelo, String marca, int ano, double preco, String tracao) {
+    public SUV(String placa, String modelo, String marca, int ano, int quilometragem, double preco, String tracao) {
         this.placa = placa;
         this.modelo = modelo;
         this.marca = marca;
         this.ano = ano;
+        this.quilometragem = quilometragem;
         this.preco = preco;
         setTracao(tracao);
     }
@@ -39,7 +41,11 @@ public class SUV extends Carro {
     }
 
     // Métodos CRUD
+    @Override
     public void cadastrarVeiculo() {
+        if (Carro.placaExistente(this.placa)) {
+            throw new IllegalArgumentException("Placa já cadastrada");
+        }
         carros.add(this);
         suvs.add(this);
     }
@@ -59,11 +65,15 @@ public class SUV extends Carro {
         return false;
     }
 
-    public double valorAno() {
-        int anos = java.time.Year.now().getValue() - this.ano;
-        // SUV desvaloriza pouco: 5% no primeiro ano, 15% no quinto ano, até 25% máximo
-        double percentualDesvalorizacao = Math.min(0.25, 0.05 + (anos * 0.02));
-        return this.preco * (1 - percentualDesvalorizacao);
+    @Override
+    public double valorAtual() {
+        int anos = Year.now().getValue() - this.ano;
+        // Desvalorização por ano (SUV desvaloriza pouco. Primeiro ano:5%, quinto ano: 15%, teto: 25%)
+        double percentualAno = Math.min(0.25, 0.05 + (anos * 0.02));
+        // Menor desvalorização por KM (0.18% a cada 1.000 km)
+        double percentualKm = Math.min(0.15, (this.quilometragem / 1000) * 0.0018);
+
+        return this.preco * (1 - Math.min(0.40, percentualAno + percentualKm));
     }
 
     public static List<SUV> getTodosSUVs() {
