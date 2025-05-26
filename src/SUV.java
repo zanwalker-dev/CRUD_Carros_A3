@@ -41,6 +41,7 @@ public class SUV extends Carro {
     }
 
     // Métodos CRUD
+    @Override
     public void cadastrarVeiculo() {
         if (Carro.placaExistente(this.placa)) {
             throw new IllegalArgumentException("Placa já cadastrada");
