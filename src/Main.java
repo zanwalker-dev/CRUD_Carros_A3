@@ -58,7 +58,7 @@ public class Main {
             System.out.print("Placa: ");
             placa = scanner.nextLine().toUpperCase();
 
-            if (Carro.placaExistente(placa)) {
+            if (GerenciadorVeiculos.placaExistente(placa)) {
                 System.out.println("Erro: Placa já cadastrada no sistema!");
                 System.out.println("Deseja tentar novamente? (S/N)");
                 String resposta = scanner.nextLine();
@@ -66,7 +66,8 @@ public class Main {
                     return;
                 }
             }
-        } while (Carro.placaExistente(placa));
+        } while (GerenciadorVeiculos.placaExistente(placa));
+
         System.out.print("Modelo: ");
         String modelo = scanner.nextLine();
         System.out.print("Marca: ");
@@ -80,29 +81,34 @@ public class Main {
         int quilometragem = scanner.nextInt();
         scanner.nextLine();
 
-        switch (tipo) {
-            case 1:
-                System.out.print("É compacto? (true/false): ");
-                boolean isCompact = scanner.nextBoolean();
-                Hatch hatch = new Hatch(placa, modelo, marca, ano, quilometragem, preco, isCompact);
-                hatch.cadastrarVeiculo();
-                break;
-            case 2:
-                System.out.print("Espaço do porta-mala (litros): ");
-                double espacoPortaMala = scanner.nextDouble();
-                Sedan sedan = new Sedan(placa, modelo, marca, ano, quilometragem, preco, espacoPortaMala);
-                sedan.cadastrarVeiculo();
-                break;
-            case 3:
-                System.out.print("Tração (4x4 ou 2x4): ");
-                String tracao = scanner.nextLine();
-                SUV suv = new SUV(placa, modelo, marca, ano, quilometragem, preco, tracao);
-                suv.cadastrarVeiculo();
-                break;
-            default:
-                System.out.println("Tipo inválido!");
+        try {
+            switch (tipo) {
+                case 1:
+                    System.out.print("É compacto? (true/false): ");
+                    boolean isCompact = scanner.nextBoolean();
+                    Hatch hatch = new Hatch(placa, modelo, marca, ano, quilometragem, preco, isCompact);
+                    hatch.cadastrarVeiculo();
+                    break;
+                case 2:
+                    System.out.print("Espaço do porta-mala (litros): ");
+                    double espacoPortaMala = scanner.nextDouble();
+                    Sedan sedan = new Sedan(placa, modelo, marca, ano, quilometragem, preco, espacoPortaMala);
+                    sedan.cadastrarVeiculo();
+                    break;
+                case 3:
+                    System.out.print("Tração (4x4 ou 2x4): ");
+                    String tracao = scanner.nextLine();
+                    SUV suv = new SUV(placa, modelo, marca, ano, quilometragem, preco, tracao);
+                    suv.cadastrarVeiculo();
+                    break;
+                default:
+                    System.out.println("Tipo inválido!");
+                    return;
+            }
+            System.out.println("Carro cadastrado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao cadastrar: " + e.getMessage());
         }
-        System.out.println("Carro cadastrado com sucesso!");
     }
 
     private static void pesquisarCarro() {
@@ -119,7 +125,7 @@ public class Main {
             case 1:
                 System.out.print("Digite a placa: ");
                 String placa = scanner.nextLine();
-                Carro carro = Carro.pesquisarPorPlaca(placa);
+                Carro carro = GerenciadorVeiculos.buscarPorPlaca(placa);
                 if (carro != null) {
                     exibirDetalhesCarro(carro);
                 } else {
@@ -137,13 +143,13 @@ public class Main {
                 List<? extends Carro> lista;
                 switch (categoria) {
                     case 1:
-                        lista = Hatch.getTodosHatchs();
+                        lista = GerenciadorVeiculos.listarHatchs();
                         break;
                     case 2:
-                        lista = Sedan.getTodosSedans();
+                        lista = GerenciadorVeiculos.listarSedans();
                         break;
                     case 3:
-                        lista = SUV.getTodosSUVs();
+                        lista = GerenciadorVeiculos.listarSUVs();
                         break;
                     default:
                         System.out.println("Categoria inválida!");
@@ -154,12 +160,12 @@ public class Main {
             case 3:
                 System.out.print("Digite o modelo: ");
                 String modelo = scanner.nextLine();
-                listarCarros(Carro.pesquisarPorModelo(modelo));
+                listarCarros(GerenciadorVeiculos.buscarPorModelo(modelo));
                 break;
             case 4:
                 System.out.print("Digite a marca: ");
                 String marca = scanner.nextLine();
-                listarCarros(Carro.pesquisarPorMarca(marca));
+                listarCarros(GerenciadorVeiculos.buscarPorMarca(marca));
                 break;
             default:
                 System.out.println("Opção inválida!");
@@ -168,7 +174,7 @@ public class Main {
 
     private static void listarTodosCarros() {
         System.out.println("\n### TODOS OS CARROS ###");
-        listarCarros(Carro.getTodosCarros());
+        listarCarros(GerenciadorVeiculos.listarTodos());
     }
 
     private static void alterarCarro() {
@@ -176,7 +182,7 @@ public class Main {
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
 
-        Carro carro = Carro.pesquisarPorPlaca(placa);
+        Carro carro = GerenciadorVeiculos.buscarPorPlaca(placa);
         if (carro == null) {
             System.out.println("Carro não encontrado!");
             return;
@@ -197,64 +203,62 @@ public class Main {
         }
 
         System.out.println("6. Atualizar quilometragem");
-
         System.out.print("Opção: ");
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
-        switch (opcao) {
-            case 1:
-                System.out.print("Novo modelo: ");
-                String modelo = scanner.nextLine();
-                carro.setModelo(modelo);
-                break;
-            case 2:
-                System.out.print("Nova marca: ");
-                String marca = scanner.nextLine();
-                carro.setMarca(marca);
-                break;
-            case 3:
-                System.out.print("Novo ano: ");
-                int ano = scanner.nextInt();
-                scanner.nextLine();
-                carro.setAno(ano);
-                break;
-            case 4:
-                System.out.print("Novo preço: ");
-                double preco = scanner.nextDouble();
-                scanner.nextLine();
-                if (carro instanceof Hatch) {
-                    ((Hatch) carro).setPreco(preco);
-                } else if (carro instanceof Sedan) {
-                    ((Sedan) carro).setPreco(preco);
-                } else if (carro instanceof SUV) {
-                    ((SUV) carro).setPreco(preco);
-                }
-                break;
-            case 5:
-                if (carro instanceof Hatch) {
-                    System.out.print("É compacto? (true/false): ");
-                    boolean isCompact = scanner.nextBoolean();
-                    ((Hatch) carro).setCompact(isCompact);
-                } else if (carro instanceof Sedan) {
-                    System.out.print("Novo espaço do porta-mala: ");
-                    double espaco = scanner.nextDouble();
-                    ((Sedan) carro).setEspacoPortaMala(espaco);
-                } else if (carro instanceof SUV) {
-                    System.out.print("Nova tração (4x4 ou 2x4): ");
-                    String tracao = scanner.nextLine();
-                    ((SUV) carro).setTracao(tracao);
-                }
-                break;
-            case 6:
-                System.out.print("Nova quilometragem: ");
-                int novaKm = scanner.nextInt();
-                carro.setQuilometragem(novaKm);
-            default:
-                System.out.println("Opção inválida!");
-                return;
+        try {
+            switch (opcao) {
+                case 1:
+                    System.out.print("Novo modelo: ");
+                    carro.setModelo(scanner.nextLine());
+                    break;
+                case 2:
+                    System.out.print("Nova marca: ");
+                    carro.setMarca(scanner.nextLine());
+                    break;
+                case 3:
+                    System.out.print("Novo ano: ");
+                    carro.setAno(scanner.nextInt());
+                    scanner.nextLine();
+                    break;
+                case 4:
+                    System.out.print("Novo preço: ");
+                    if (carro instanceof Hatch) {
+                        ((Hatch) carro).setPreco(scanner.nextDouble());
+                    } else if (carro instanceof Sedan) {
+                        ((Sedan) carro).setPreco(scanner.nextDouble());
+                    } else if (carro instanceof SUV) {
+                        ((SUV) carro).setPreco(scanner.nextDouble());
+                    }
+                    scanner.nextLine();
+                    break;
+                case 5:
+                    if (carro instanceof Hatch) {
+                        System.out.print("É compacto? (true/false): ");
+                        ((Hatch) carro).setCompact(scanner.nextBoolean());
+                    } else if (carro instanceof Sedan) {
+                        System.out.print("Novo espaço do porta-mala: ");
+                        ((Sedan) carro).setEspacoPortaMala(scanner.nextDouble());
+                    } else if (carro instanceof SUV) {
+                        System.out.print("Nova tração (4x4 ou 2x4): ");
+                        ((SUV) carro).setTracao(scanner.nextLine());
+                    }
+                    scanner.nextLine();
+                    break;
+                case 6:
+                    System.out.print("Nova quilometragem: ");
+                    carro.setQuilometragem(scanner.nextInt());
+                    scanner.nextLine();
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+                    return;
+            }
+            System.out.println("Carro atualizado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao atualizar: " + e.getMessage());
         }
-        System.out.println("Carro atualizado com sucesso!");
     }
 
     private static void removerCarro() {
@@ -262,8 +266,11 @@ public class Main {
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
 
-        Carro.removerVeiculo(placa);
-        System.out.println("Carro removido com sucesso!");
+        if (GerenciadorVeiculos.remover(placa)) {
+            System.out.println("Carro removido com sucesso!");
+        } else {
+            System.out.println("Carro não encontrado!");
+        }
     }
 
     private static void listarCarros(List<? extends Carro> carros) {
@@ -283,28 +290,25 @@ public class Main {
         System.out.println("Modelo: " + carro.getModelo());
         System.out.println("Marca: " + carro.getMarca());
         System.out.println("Ano: " + carro.getAno());
+        System.out.println("Quilometragem: " + carro.getQuilometragem() + " km");
 
         if (carro instanceof Hatch) {
             Hatch hatch = (Hatch) carro;
             System.out.println("Tipo: Hatch");
             System.out.printf("Preço: R$%.2f\n", hatch.getPreco());
             System.out.println("Compacto: " + hatch.isCompact());
-            System.out.println("Quilometragem: " + hatch.getQuilometragem() + " km");
-            System.out.printf("Valor atual: R$%.2f\n", hatch.valorAtual());
         } else if (carro instanceof Sedan) {
             Sedan sedan = (Sedan) carro;
             System.out.println("Tipo: Sedan");
             System.out.printf("Preço: R$%.2f\n", sedan.getPreco());
             System.out.println("Porta-mala: " + sedan.getEspacoPortaMala() + " litros");
-            System.out.println("Quilometragem: " + sedan.getQuilometragem() + " km");
-            System.out.printf("Valor atual: R$%.2f\n", sedan.valorAtual());
         } else if (carro instanceof SUV) {
             SUV suv = (SUV) carro;
             System.out.println("Tipo: SUV");
             System.out.printf("Preço: R$%.2f\n", suv.getPreco());
             System.out.println("Tração: " + suv.getTracao());
-            System.out.println("Quilometragem: " + carro.getQuilometragem() + " km");
-            System.out.printf("Valor atual: R$%.2f\n", carro.valorAtual());
         }
+
+        System.out.printf("Valor atual: R$%.2f\n", carro.valorAtual());
     }
 }
