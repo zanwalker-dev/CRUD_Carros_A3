@@ -46,49 +46,5 @@ public abstract class Carro {
         this.quilometragem = quilometragem;
     }
 
-    // Métodos CRUD
-    public abstract void cadastrarVeiculo();
-
-    public static void removerVeiculo(String placa) {
-        carros.removeIf(carro -> carro.getPlaca().equals(placa));
-    }
-
     public abstract double valorAtual();
-
-    public static boolean placaExistente(String placa) {
-        return carros.stream().anyMatch(c -> c.getPlaca().equalsIgnoreCase(placa));
-    }
-
-    public static List<Carro> pesquisarPorModelo(String modelo) {
-        List<Carro> resultado = new ArrayList<>();
-        for (Carro carro : carros) {
-            if (carro.getModelo().equalsIgnoreCase(modelo)) {
-                resultado.add(carro);
-            }
-        }
-        return resultado;
-    }
-
-    public static List<Carro> pesquisarPorMarca(String marca) {
-        List<Carro> resultado = new ArrayList<>();
-        for (Carro carro : carros) {
-            if (carro.getMarca().equalsIgnoreCase(marca)) {
-                resultado.add(carro);
-            }
-        }
-        return resultado;
-    }
-
-    public static Carro pesquisarPorPlaca(String placa) {
-        for (Carro carro : carros) {
-            if (carro.getPlaca().equals(placa)) {
-                return carro;
-            }
-        }
-        return null;
-    }
-
-    public static List<Carro> getTodosCarros() {
-        return new ArrayList<>(carros);
-    }
 }
