@@ -1,11 +1,8 @@
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SUV extends Carro {
     private double preco;
     private String tracao;
-    private static List<SUV> suvs = new ArrayList<>();
 
     public SUV() {}
 
@@ -20,13 +17,29 @@ public class SUV extends Carro {
         setTracao(tracao);
     }
 
-    public String getTracao() { return tracao; }
+    // Getters e Setters
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public String getTracao() {
+        return tracao;
+    }
 
     public void setTracao(String tracao) {
         if (!tracao.equals("4x4") && !tracao.equals("2x4")) {
             throw new IllegalArgumentException("Tração deve ser '4x4' ou '2x4'");
         }
         this.tracao = tracao;
+    }
+
+    @Override
+    public void cadastrarVeiculo() {
+        GerenciadorVeiculos.adicionar(this);
     }
 
     @Override
