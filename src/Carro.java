@@ -9,18 +9,6 @@ public abstract class Carro {
     protected int quilometragem;
     protected static List<Carro> carros = new ArrayList<>();
 
-    public static boolean atualizarVeiculo(String placa, String novoModelo, String novaMarca, int novoAno) {
-        for (Carro carro : carros) {
-            if (carro.getPlaca().equals(placa)) {
-                carro.setModelo(novoModelo);
-                carro.setMarca(novaMarca);
-                carro.setAno(novoAno);
-                return true;
-            }
-        }
-        return false;
-    }
-
     // Getters e Setters
     public String getPlaca() {
         return placa;
