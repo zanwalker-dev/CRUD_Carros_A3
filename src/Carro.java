@@ -1,17 +1,17 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Carro {
     protected String placa;
     protected String modelo;
     protected String marca;
     protected int ano;
     protected int quilometragem;
-    protected static List<Carro> carros = new ArrayList<>();
 
     // Getters e Setters
     public String getPlaca() {
         return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
     public String getModelo() {
@@ -47,4 +47,5 @@ public abstract class Carro {
     }
 
     public abstract double valorAtual();
+    public abstract void cadastrarVeiculo();
 }
