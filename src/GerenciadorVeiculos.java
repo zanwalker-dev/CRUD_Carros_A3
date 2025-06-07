@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GerenciadorVeiculos {
-    private static List<Carro> carros = new ArrayList<>();
+    static List<Carro> carros = new ArrayList<>();
 
     // Métodos CRUD básicos
     public static void adicionar(Carro carro) {
