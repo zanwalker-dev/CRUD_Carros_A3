@@ -11,41 +11,49 @@ public class MenuPrincipal {
     }
 
     public void exibirMenu() {
-        while (true) {
-            System.out.println("\n### MENU PRINCIPAL ###");
-            System.out.println("1. Cadastrar carro para venda");
-            System.out.println("2. Pesquisar carro");
-            System.out.println("3. Listar todos os carros");
-            System.out.println("4. Alterar dados de um carro");
-            System.out.println("5. Remover um carro");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
+        try{
+            while (true) {
+                System.out.println("\n### MENU PRINCIPAL ###");
+                System.out.println("1. Cadastrar carro para venda");
+                System.out.println("2. Pesquisar carro");
+                System.out.println("3. Listar todos os carros");
+                System.out.println("4. Alterar dados de um carro");
+                System.out.println("5. Remover um carro");
+                System.out.println("0. Sair");
+                System.out.print("Escolha uma opção: ");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+                int opcao = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcao) {
-                case 1:
-                    cadastrarCarro();
-                    break;
-                case 2:
-                    pesquisarCarro();
-                    break;
-                case 3:
-                    listarTodosCarros();
-                    break;
-                case 4:
-                    alterarCarro();
-                    break;
-                case 5:
-                    removerCarro();
-                    break;
-                case 0:
-                    System.out.println("Saindo do sistema...");
-                    return;
-                default:
-                    System.out.println("Opção inválida!");
+                switch (opcao) {
+                    case 1:
+                        cadastrarCarro();
+                        break;
+                    case 2:
+                        pesquisarCarro();
+                        break;
+                    case 3:
+                        listarTodosCarros();
+                        break;
+                    case 4:
+                        alterarCarro();
+                        break;
+                    case 5:
+                        removerCarro();
+                        break;
+                    case 0:
+                        System.out.println("Saindo do sistema...");
+                        return;
+                    default:
+                        System.out.println("Opção inválida!");
+                }
+
+
             }
+
+        } finally {
+            DatabaseManager dbManager = new DatabaseManager();
+            dbManager.closeConnection();
         }
     }
 
@@ -261,6 +269,7 @@ public class MenuPrincipal {
                     System.out.println("Opção inválida!");
                     return;
             }
+            gerenciador.atualizarCarro(carro);
             System.out.println("Carro atualizado com sucesso!");
         } catch (IllegalArgumentException e) {
             System.out.println("Erro ao atualizar: " + e.getMessage());

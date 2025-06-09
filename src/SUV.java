@@ -39,7 +39,8 @@ public class SUV extends Carro {
 
     @Override
     public void cadastrarVeiculo() {
-        GerenciadorVeiculos.adicionar(this);
+        GerenciadorVeiculos gerenciador = new GerenciadorVeiculos();
+        gerenciador.adicionar(this);
     }
 
     @Override
